@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
 app.use((error, req, res, next) => {
   return res
-    .status(error.code)
+    .status(error.code || 500)
     .json({ message: error.message, error: error.error });
 });
 

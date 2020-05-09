@@ -22,7 +22,7 @@ const errorHandler = (err, next, details = null) => {
     const error = new HttpError('unkownError', 500);
     return next(error);
   }
-};
+};zz
 
 exports.errorHandler = errorHandler;
 exports.error = error;

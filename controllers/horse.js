@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 
 const Horse = require('../models/horse');
 const { errorHandler } = require('../utils/errorHandler');
+const { HorseNotFoundError } = require('../utils/errors')
 
 async function createHorse(req, res, next) {
   const errors = validationResult(req);
@@ -47,13 +48,13 @@ async function getHorseBySlug(req, res, next) {
   try {
     const horse = await Horse.findOne({ slug: slug });
 
-    if (!horse) throw new Error('horseNotFound');
+    if (!horse) return next(new HorseNotFoundError(`Could not find horse with slug ${slug}`))
 
     res.status(200).json({ horse });
 
     return horse;
   } catch (err) {
-    errorHandler(err, next);
+    return next(err);
   }
 }
 
